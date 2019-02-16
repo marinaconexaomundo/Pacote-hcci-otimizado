@@ -19,11 +19,16 @@ arma::mat mats(arma::mat X, List model, int method) {
   for (int i = 0; i < dim; i++){
     error_hat(i,i) = residuals[i];
   }
+  // ainda a questao da matriz error_hat
   
-  // List::create(_["bread_1"] = bread1,
-     //          _["bread_2"] = bread2)
+  if(method == 0){
+    
+    arma::mat hc = error_hat * 2;
+    
+    return hc;
+  }
   
-  return error_hat;
+  // return hc;
   
 }
 
