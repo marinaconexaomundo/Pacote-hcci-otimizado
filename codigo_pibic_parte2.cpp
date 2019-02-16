@@ -64,10 +64,37 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
     return hc;
   }
   
-  
-  
-  
-  // return hc;
+  // Quando method = 4
+  // if(method == 4){
+    
+    //int four = 4;
+    //double media_h = mean(h);
+    
+    //NumericVector vec = h/media_h;
+    //arma::mat delta = pmin(four, vec);
+    
+    //arma::vec h_1d = arma::zeros(dim);
+    
+    //for(int i = 0; i < dim; i++){
+     //h_1d[i] = pow(h_1[i],delta[i]);
+    //}
+
+    // NumericVector vetor = resi_2/wrap(h_1d);
+    
+  //  for (int i = 0; i < dim; i++){
+  //    error_hat(i,i) = vetor[i];
+  //  }
+    
+   // for (int i = 0; i < dim; i++){
+    //  error_hat(i,i) = vetor[i];
+    //}
+    
+  //  arma::mat omega = error_hat;
+  //  arma::mat hc = bread_1 * omega * bread_2;
+    
+    
+  //  return hc;
+ // }
   
 }
 
