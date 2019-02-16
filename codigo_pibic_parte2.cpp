@@ -20,12 +20,12 @@ arma::mat mats(arma::mat X, List model, int method) {
     arma::mat error_hat = arma::zeros(dim,dim);
     // ainda a questao da matriz error_hat
     
-    // NumericVector residuals = pow(residuals,2);
+    NumericVector resi = pow(residuals,2);
   
     for (int i = 0; i < dim; i++){
-      error_hat(i,i) = residuals[i];
+      error_hat(i,i) = resi[i];
     }
-    arma::mat omega = pow(error_hat,2);
+    arma::mat omega = error_hat;
     arma::mat hc = bread_1 * omega * bread_2;
     
     return hc;
