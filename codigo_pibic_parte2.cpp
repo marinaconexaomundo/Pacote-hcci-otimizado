@@ -74,18 +74,17 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
     NumericVector delta = pmin(four, vec);
     
     arma::vec h_1d = arma::zeros(dim);
+    
     for(int i = 0; i < dim; i++){
     NumericVector h_1d = pow(h_1[i],delta[i]);
     }
-    NumericVector vetor = resi_2/h_1d;
+    arma::vec re = pow(residuals,2);
+    arma::vec vetor = re/h_1d;
     
     for (int i = 0; i < dim; i++){
       error_hat(i,i) = vetor[i];
     }
-    
-    for (int i = 0; i < dim; i++){
-      error_hat(i,i) = vetor[i];
-    }
+
     
     arma::mat omega = error_hat;
     arma::mat hc = bread_1 * omega * bread_2;
