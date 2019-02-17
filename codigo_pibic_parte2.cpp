@@ -65,40 +65,38 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
   }
   
   // Quando method = 4
-  // if(method == 4){
+   if(method == 4){
     
-    //int four = 4;
-    //double media_h = mean(h);
+    int four = 4;
+    double media_h = mean(h);
     
-    //NumericVector vec = h/media_h;
-    //arma::mat delta = pmin(four, vec);
+    NumericVector vec = h/media_h;
+    NumericVector delta = pmin(four, vec);
     
-    //arma::vec h_1d = arma::zeros(dim);
+    arma::vec h_1d = arma::zeros(dim);
+    for(int i = 0; i < dim; i++){
+    NumericVector h_1d = pow(h_1[i],delta[i]);
+    }
+    NumericVector vetor = resi_2/h_1d;
     
-    //for(int i = 0; i < dim; i++){
-     //h_1d[i] = pow(h_1[i],delta[i]);
-    //}
-
-    // NumericVector vetor = resi_2/wrap(h_1d);
+    for (int i = 0; i < dim; i++){
+      error_hat(i,i) = vetor[i];
+    }
     
-  //  for (int i = 0; i < dim; i++){
-  //    error_hat(i,i) = vetor[i];
-  //  }
+    for (int i = 0; i < dim; i++){
+      error_hat(i,i) = vetor[i];
+    }
     
-   // for (int i = 0; i < dim; i++){
-    //  error_hat(i,i) = vetor[i];
-    //}
-    
-  //  arma::mat omega = error_hat;
-  //  arma::mat hc = bread_1 * omega * bread_2;
+    arma::mat omega = error_hat;
+    arma::mat hc = bread_1 * omega * bread_2;
     
     
-  //  return hc;
- // }
+    return hc;
+  }
   
 }
 
 
  /*** R
-  mats(X = M, model = modelo, method = 3,  h = h)
+  mats(X = M, model = modelo, method = 4,  h = h)
 */
