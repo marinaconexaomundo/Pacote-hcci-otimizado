@@ -5,7 +5,7 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]]
 
 // [[Rcpp::export]]
-arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
+arma::mat mats(arma::mat X, List model, int method, NumericVector h , double k) {
   
   arma::mat V = X.t() * X;
   arma::mat bread_1 = inv(V) * X.t(); 
@@ -66,7 +66,7 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
   
   // Quando method = 4
    if(method == 4){
-    // int four = 4;
+   
     double media_h = mean(h);
     
     NumericVector vec = h/media_h;
@@ -77,6 +77,7 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
     for(int i = 0; i < dim; i++){
      h_1d[i] = pow(h_1[i],delta[i]);
     }
+    
     arma::vec re = pow(residuals,2);
     arma::vec vetor = re/h_1d;
     
@@ -84,7 +85,6 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
       error_hat(i,i) = vetor[i];
     }
 
-    
     arma::mat omega = error_hat;
     arma::mat hc = bread_1 * omega * bread_2;
     
@@ -93,11 +93,47 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
   }
    
   // Quando method = 5
-  // if(method == 5)
+  if(method == 5){
+    
+    double media_h = mean(h);
+    
+    NumericVector vec = h/media_h;
+    double max_h = max(h);
+    
+    double vec_h = max_h/media_h;
+     double vec_h_k = k * vec_h;
+   
+    // double four = 4;
+    
+    arma::vec maxmum = {4, vec_h_k};
+    
+    double max_h_k = max(maxmum);
+    NumericVector alpha = pmin(vec, max_h_k);
+    
+    arma::vec h_1d = arma::zeros(dim);
+    
+    for(int i = 0; i < dim; i++){
+      h_1d[i] = pow(h_1[i],alpha[i]);
+    }
+
+    arma::vec re = pow(residuals,2);
+    arma::vec raiz_for_omega = h_1d; 
+    arma::vec vetor = re/raiz_for_omega;
+    
+    for (int i = 0; i < dim; i++){
+      error_hat(i,i) = vetor[i];
+    }
+    
+    arma::mat omega = error_hat;
+    arma::mat hc = bread_1 * omega * bread_2;
+    
+    return hc;
+  }
   
 }
 
 
  /*** R
-  mats(X = M, model = modelo, method = 4,  h = h)
+  k = 0.7
+  mats(X = M, model = modelo, method = 5,  h = h, k = k)
 */
