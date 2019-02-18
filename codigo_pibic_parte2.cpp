@@ -66,17 +66,16 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
   
   // Quando method = 4
    if(method == 4){
-    
-    int four = 4;
+    // int four = 4;
     double media_h = mean(h);
     
     NumericVector vec = h/media_h;
-    NumericVector delta = pmin(four, vec);
+    NumericVector delta = pmin(4, vec);
     
     arma::vec h_1d = arma::zeros(dim);
     
     for(int i = 0; i < dim; i++){
-    NumericVector h_1d = pow(h_1[i],delta[i]);
+     h_1d[i] = pow(h_1[i],delta[i]);
     }
     arma::vec re = pow(residuals,2);
     arma::vec vetor = re/h_1d;
@@ -92,6 +91,9 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h ) {
     
     return hc;
   }
+   
+  // Quando method = 5
+  // if(method == 5)
   
 }
 
