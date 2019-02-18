@@ -24,7 +24,6 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h , double k) 
   
   // Quando method = 0
   if(method == 0){
-    // NumericVector resi = pow(residuals,2);
   
     for (int i = 0; i < dim; i++){
       error_hat(i,i) = resi_2[i];
@@ -98,7 +97,6 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h , double k) 
     double media_h = mean(h);
     double max_h = max(h);
     double vec_h = k * max_h/media_h;
-    // double vec_h_k = k * vec_h;
     
     NumericVector vec = h/media_h;
     arma::vec maxmum = {4, vec_h};
@@ -126,9 +124,3 @@ arma::mat mats(arma::mat X, List model, int method, NumericVector h , double k) 
   }
   
 }
-
-
-// /*** R
-//  k = 0.7
-//  mats(X = M, model = modelo, method = 5,  h = h, k = k)
-// */

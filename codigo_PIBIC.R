@@ -8,9 +8,9 @@ hcc <- function (model, method = 4, k = 0.7){
     method = 4L
   }
   
-  M <- as.matrix(cbind(1, modelo$model[, -1]))
-  h <- as.vector(hatvalues(modelo))
+  M <- as.matrix(cbind(1, model$model[, -1]))
+  h <- as.vector(hatvalues(model))
   
-  mats(X = M, model = modelo, method = method,  h = h, k = k)
+  mats(X = M, model = model, method = method,  h = h, k = k)
 
 }
