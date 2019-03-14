@@ -5,7 +5,8 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 
 bool is_wholenumber(NumericVector x, double tol){
-  return abs(x - round(x,0)) == tol;
+  // for(int i = 0; i < x.size(); i++)
+  return wrap(abs(x - round(x,0)) < tol);
 }
 
 /*** R
