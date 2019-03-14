@@ -4,12 +4,14 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 
-float is_wholenumber(NumericVector x, double tol){
+double is_wholenumber(NumericVector x, double tol){
   NumericVector rounding = round(x,0);
   NumericVector subtracao = x - rounding;
   NumericVector absol = abs(subtracao);
   
-  float avaliando = absol[1] - tol;
+  double first = absol[1];
+  double avaliando = first - tol;
   
   return avaliando;
 }
+ 
