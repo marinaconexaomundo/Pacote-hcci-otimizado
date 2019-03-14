@@ -5,11 +5,18 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 
 bool is_wholenumber(NumericVector x, double tol){
-  // for(int i = 0; i < x.size(); i++)
-  return wrap(abs(x - round(x,0)) < tol);
+  
+  bool boreliano;
+  NumericVector rounding = round(x,0);
+  for(int i = 0; i < x.size(); i++){
+    
+   boreliano = wrap(abs(x[i] - rounding[i]) < tol);
+    
+  }
+  return boreliano;
 }
 
 /*** R
-s <- rnorm(1)
+s <- rnorm(10)
 is_wholenumber(s, .Machine$double.eps)
 */
