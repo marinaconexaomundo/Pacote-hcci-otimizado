@@ -4,13 +4,16 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 
-bool is_wholenumber(NumericVector x, double tol){
+double is_wholenumber(NumericVector x, double tol){
   NumericVector rounding = round(x,0);
   NumericVector subtracao = x - rounding;
   NumericVector absol = abs(subtracao);
   
-  bool booliano = is_true(absol < tol);
-  return wrap(booliano);
+  // para avaliar se eh menor tenho como fazer dessa forma
+  // int i = 1;
+  double avaliando = absol[1] - tol;
+  
+  return avaliando;
 }
 
 /*** R
