@@ -6,7 +6,11 @@ using namespace Rcpp;
 
 bool is_wholenumber(NumericVector x, double tol){
   NumericVector rounding = round(x,0);
-  return wrap(abs(x - rounding) < tol);
+  NumericVector subtracao = x - rounding;
+  NumericVector absol = abs(subtracao);
+  
+  bool booliano = is_true(absol < tol);
+  return wrap(booliano);
 }
 
 /*** R
