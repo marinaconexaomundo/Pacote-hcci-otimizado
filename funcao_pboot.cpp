@@ -5,7 +5,7 @@ using namespace Rcpp;
 // [[Rcpp::depends(RcppArmadillo)]]
 // [[Rcpp::export]]
 
-NumericVector pboot(List model, double significance, NumericVector J, NumericVector K, double tol){
+int pboot(List model, double significance, NumericVector J, NumericVector K, double tol){
   
   if(J[0] == 1 || K[0] == 1){
     
@@ -28,31 +28,34 @@ NumericVector pboot(List model, double significance, NumericVector J, NumericVec
     K[1] = (1/gamma2) * L3;
     
     
-  // Trazendo do rcpp a funcao "is_wholenumber"
-  Function is_wholenumber("is_wholenumber");
+    // Trazendo do rcpp a funcao "is_wholenumber"
+    Function is_wholenumber("is_wholenumber");
 
-  NumericVector ava_J_significance = (J[1] + 1) * significance;
-  NumericVector J_K = (J[1] + 1)/K[1];
+    // NumericVector ava_J_significance = (J[1] + 1) * significance;
+    // NumericVector J_K = (J[1] + 1)/K[1];
   
-  double whole1 = is_wholenumber(K[1]/2, tol);
-  double whole2 = is_wholenumber(ava_J_significance, tol);
-  double whole3 = is_wholenumber(J_K, tol);
+    // double whole1;
+    // double whole2;
+    // double whole3;
   
-  while(whole1 > 0 &  whole2 > 0) {
+    // whole3 = is_wholenumber(J_K, tol);
+  
+    while(is_wholenumber(K/2, tol) > 0 &  is_wholenumber((J[1]+1)*significance, tol) > 0) {
     
-    ava_J_significance = (J + 1) * significance;
-    J_K = (J + 1)/K;
+      // ava_J_significance = (J + 1) * significance;
+      // J_K = (J + 1)/K;
     
-    whole1 = is_wholenumber(K/2, tol);
-    whole2 = is_wholenumber(ava_J_significance, tol);
-    whole3 = is_wholenumber(J_K);
+      // whole1 = is_wholenumber(K/2, tol);
+      // whole2 = is_wholenumber((J[1]+1)*significance, tol);
+      // whole3 = is_wholenumber(J_K);
     
-    while(whole1 > 0) K = K + 1;
-    while(whole2 > 0) J = J + 1;
-    while(whole3 > 0) K = K + 1;
+      while(is_wholenumber(K/2, tol) > 0) K = K + 1;
+      while(is_wholenumber((J[1]+1)*significance, tol) > 0) J = J + 1;
+      while(is_wholenumber((J + 1)/K, tol) > 0) K = K + 1;
+    }
+  return 1;
   }
-  }
-}
+
 }
 
 
