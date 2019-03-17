@@ -27,31 +27,17 @@ int pboot(List model, double significance, NumericVector J, NumericVector K, dou
     int L3 = as<int>(vector_escalar(L, 1/3));
     K[1] = (1/gamma2) * L3;
     
+    NumericVector U = (1/gamma2) * L3;
+    NumericVector T = gamma2 * L2;
     
     // Trazendo do rcpp a funcao "is_wholenumber"
     Function is_wholenumber("is_wholenumber");
-
-    // NumericVector ava_J_significance = (J[1] + 1) * significance;
-    // NumericVector J_K = (J[1] + 1)/K[1];
   
-    // double whole1;
-    // double whole2;
-    // double whole3;
-  
-    // whole3 = is_wholenumber(J_K, tol);
-  
-    while(is_wholenumber(K/2, tol) > 0 &  is_wholenumber((J[1]+1)*significance, tol) > 0) {
+    while(is_wholenumber(U/2, tol) > 0 &  is_wholenumber((T+1)*significance, tol) > 0) {
     
-      // ava_J_significance = (J + 1) * significance;
-      // J_K = (J + 1)/K;
-    
-      // whole1 = is_wholenumber(K/2, tol);
-      // whole2 = is_wholenumber((J[1]+1)*significance, tol);
-      // whole3 = is_wholenumber(J_K);
-    
-      while(is_wholenumber(K/2, tol) > 0) K = K + 1;
-      while(is_wholenumber((J[1]+1)*significance, tol) > 0) J = J + 1;
-      while(is_wholenumber((J + 1)/K, tol) > 0) K = K + 1;
+      while(is_wholenumber(U, tol) > 0) U = U + 1;
+      while(is_wholenumber((T+1)*significance, tol) > 0) T = T + 1;
+      while(is_wholenumber((T + 1)/K, tol) > 0) U = U + 1;
     }
   return 1;
   }
